@@ -81,6 +81,7 @@ def strassen_expand(matrix_a, matrix_b):
         else:
             break
 
+    div = int(div)
     A = strassen_expand_matrix_divide(matrix_a, div)
     B = strassen_expand_matrix_divide(matrix_b, div)
 
@@ -92,19 +93,19 @@ def matrix_multiplication(matrix_a, matrix_b, div):
     length = len(matrix_a[0][0])
     matrix_res = np.zeros(shape=matrix_a.shape)
 
-    for i in range(int(div)):
+    for i in range(div):
         for j in range(int(div)):
             # 空矩阵，用于储存矩阵的和
             tmp = np.zeros((length, length))
-            for k in range(int(div)):
+            for k in range(div):
                 tmp = tmp + strassen(matrix_a[i][k], matrix_b[k][j])
             matrix_res[i][j] = tmp
 
     # 聚合，使列合为一起，即左右合并
     cons = []
-    for i in range(int(div)):
+    for i in range(div):
         con = matrix_res[i][0]
-        for j in range(1, int(div)):
+        for j in range(1, div):
             con = np.concatenate((con, matrix_res[i][j]), axis=1)
         cons.append(con)
 
